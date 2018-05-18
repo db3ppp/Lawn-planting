@@ -1,7 +1,0 @@
-tutorial이라는 directory 안에 sample.txt있음.
-tutorial add 하고, commit했음
-github(원격저장소)이랑 연결했음 gitexample repository에!! (git remote add <gitexample 주소> )
-연결하고 push함 (git push origin master)
-push 했더니 github에서 gitexample에 tutorial 생김 ->이제 다른사람들이 수정할 수 있음
-push 하고 수정된 내용 push 해보기위해 tutorial 수정해보기~~~ create new file로 지금이거 수정중!
-원래 남의 거 수정하고 pull request 한 다음 허락 해 줘야됨
