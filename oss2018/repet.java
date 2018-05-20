@@ -1,3 +1,4 @@
+//https://www.acmicpc.net/problem/2675
 import java.util.Scanner;
 import java.lang.*;
 public class repet {
