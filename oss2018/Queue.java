@@ -28,8 +28,8 @@
 			String result;
 			
 			for(int i=0;i<size;i++) {
-				front = cur;
-				cur = cur.link;
+				front = cur; //front는 cur을 가리키고
+				cur = cur.link; //cur은 node수만큼 끝까지 이동한다.
 			}
 			result = front.data;
 			size--; //node 수 하나 줄이기 
@@ -40,7 +40,7 @@
 		public void showData() {
 			Q4_Queue cur = rear;
 			
-			while(cur != null) {
+			for(int i=0;i<size;i++) {
 			System.out.print(cur.data+" ");
 			cur=cur.link;
 			}
