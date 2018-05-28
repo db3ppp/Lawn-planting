@@ -1,27 +1,26 @@
 //Lab 1 : json text file 읽어오기
-char *readjsonfile(const char* filename){
+char * readjsonfile(const char * filename)
+{
+	char temp[200];
+	char *result;
+	
+	FILE *fp;
+	fp = fopen(filename, "rt");
 
-  FILE *fp;
-  fp = fopen(filename,"r");
-  char temp[200];
-  char *result;
+	fgets(input, sizeof(temp), fp);
 
-  result = (char*)malloc(sizeof(temp));
+	result = (char *) malloc(strlen(temp));
+	strncpy(result, temp, strlen(temp));
 
-    while(!feof(fp)){
+	while(!feof(fp)) {
+		fgets(temp, sizeof(temp), fp);
+		result = (char *) realloc(result, sizeof(result) + sizeof(temp));
+		strcat(result, temp);
+	}
+	
+	result[strlen(result)] = '\0';
 
-      fgets(temp, sizeof(temp), fp);
-      result = (char*)realloc(result, strlen(result)+strlen(temp));
-
-      int last = strlen(temp);
-      if (last != 0 && temp[last-1] == '\n'){
-        temp[last] = '\0';
-        }
-      strncat(result,temp,strlen(temp));
-
-    }
- fclose(fp);
-return result;
+	return result;
 }
 
 //Lab2: json token 정보출력
