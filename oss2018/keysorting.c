@@ -1,10 +1,7 @@
-#include        <stdio.h>
-#include        <stdlib.h>
 #include        <string.h>
 
 #define         MAX_SIZE        1000
 #define         BUF_SIZE        80
-#define SWAP(a,b,temp) {a=b; b=temp; temp=a;}
 
 typedef struct {
         char    name[20];
@@ -16,12 +13,13 @@ typedef struct {
         int     total;
 } student;
 
-void selectionsort(student student_list,int numStu);
-void quicksort(student student_list,int numStu);
-//void heapsort(student student_list,int numStu);
+void selectionsort(student* s,int numStu,int key);
+void quicksort(student *s,int left, int right,int key);
+//void heapsort(student* s,int numStu,int key);
+//void adjust(student *s, int root, int n, int key);
+void bubblesort(student* s, int numStu, int key);
 
-void SWAP (student* s, int a, int b)
-{
+void SWAP (student* s, int a, int b){
 	student temp;
 	temp = s[a];
 	s[a] = s[b];
@@ -34,19 +32,10 @@ char filename[] = "studentlist.txt";
 FILE *fp;
 
 int numStu = 0;
-//student student_list[MAX_SIZE];
-student* student_list;
+student student_list[MAX_SIZE];
 char    buffer[BUF_SIZE];
 int     i;
-
-int sort;
-printf("Sort algorithm 선택하세요\n (1. 2. quick sort 3. heap sort)");
-scanf(" %d",&sort);
-
-int key;
-printf("Sort에 적용할 key 종류를 선택하세요\n (1.이름 2.학번 3.총점)");
-scanf(" %d",&key);
-
+int sort,key;
 
 /* reading the input data */
 	fp = fopen(filename, "r");
@@ -70,20 +59,37 @@ scanf(" %d",&key);
 
 	fclose(fp);
 
-/* Sorting the list
+while(1){
+printf("Sort algorithm 선택하세요\n (1.selection sort 2. quick sort 3. bubble sort)");
+scanf("%d",&sort);
+if(sort==1||sort==2||sort==3)
+break;
+else printf("*올바른 algorithm을 다시 선택하세요*\n");
+}
+while(1){
+printf("Sort에 적용할 key 종류를 선택하세요\n (1.이름 2.학번 3.총점)");
+scanf("%d",&key);
+if(key==1||key==2||key==3)
+break;
+else printf("*올바른 key를 다시 입력하세요*\n");
+}
 
-        my_sortalgorithm(student_list, numStu);
 
-*/
+/* Sorting the list */
+
 switch(sort){
-  case 1: selectionsort(student_list,numStu);
+  case 1: selectionsort(student_list,numStu,key);
           break;
-  case 2: quicksort(student_list,numStu);
+  case 2: quicksort(student_list,0,numStu-1,key);
           break;
-  case 3: heapsort(studentlist,numStu);
+  //case 3: heapsort(student_list,numStu,key);
+  case 3: bubblesort(student_list,numStu,key);
           break;
   default: printf("올바른 key를 입력하세요.\n");
-} 
+  break;
+
+  }
+
 
 
 /* display the result */
@@ -102,124 +108,134 @@ switch(sort){
 	}
 	printf("\n\n");
 
+
 }
 
   void selectionsort(student *s,int numStu,int key){
     int i, j;
-    student temp;
 
     if(key == 1){
     for(i=0; i<numStu-1; i++) {
         for(j=i; j<numStu; j++) {
-            if(s[i].name > s[j].name)
-            temp = s[i].name;
-            s[i].name = s[j].name;
-            s[j].name = temp;
+          if(strcmp(s[i].name, s[j].name)>0)
+            SWAP(s,i,j);
         }
-    }
+      }
     }
     else if(key == 2){
          for(i=0; i<numStu-1; i++) {
         for(j=i; j<numStu; j++) {
-            if(s[i].name > s[j].student_id)
-            temp = s[i].student_id;
-            s[i].student_id = s[j].student_id;
-            s[j].student_id = temp;
+            if(strcmp(s[i].student_id, s[j].student_id)>0)
+            SWAP(s,i,j);
         }
+     }
     }
-    }
-    else
+    else if(key == 3){
        for(i=0; i<numStu-1; i++) {
         for(j=i; j<numStu; j++) {
             if(s[i].total > s[j].total)
-            temp = s[i].total;
-            s[i].total = s[j].total;
-            s[j].total = temp;
+            SWAP(s,i,j);
         }
+      }
     }
+    else
+      printf("올바른 key를 입력하세요.\n");
 
   }
 
-  void quicksort(student *s,int left, int right, int key){
-    student temp;
-    int pivot,i,j;
-
-    if(left < right){
-      i = left; j = right+1;
+  void quicksort(student *s, int left, int right, int key){
 
       if(key == 1){
-      pivot = s[left].name;
+        if(left>right) return;
 
-      do{
-        do i++; while(s[i].name < pivot);
-        do j++; while(s[j].name > pivot);
-      if(i<j) SWAP(s,i,j);
-      }while(i<j);
-      SWAP(s,left,j);
-      quicksort(s,left,j-1);
-      quicksort(s,j+1,right);
+        if(left <= right){
+        int i,j;
+        i = left; j = right+1;
+        char* pivot = s[left].name;
+
+        do{
+         do i++; while(strcmp(s[i].name, pivot) < 0);
+         do j--; while(strcmp(s[j].name, pivot) > 0);
+         if(i<j) SWAP(s,i,j);
+         }while(i<j);
+       SWAP(s,left,j);
+        quicksort(s,left,j-1,key);
+        quicksort(s,j+1,right,key);
+        }
       }
 
-      else if(key == 2){
-        pivot = s[left].student_id;
+       else if(key == 2){
+        if(left>right) return;
 
-      do{
-        do i++; while(s[i].student_id < pivot);
-        do j++; while(s[j].student_id > pivot);
-      if(i<j) SWAP(s,i,j);
-      }while(i<j);
-      SWAP(s,left,j);
-      quicksort(s,left,j-1);
-      quicksort(s,j+1,right);
+        if(left <= right){
+        int i,j;
+        i = left; j = right+1;
+        char* pivot = s[left].student_id;
+
+        do{
+         do i++; while(strcmp(s[i].student_id, pivot) < 0);
+         do j--; while(strcmp(s[j].student_id, pivot) > 0);
+         if(i<j) SWAP(s,i,j);
+         }while(i<j);
+       SWAP(s,left,j);
+        quicksort(s,left,j-1,key);
+        quicksort(s,j+1,right,key);
+        }
       }
 
-      else{
-        pivot = s[left].total;
+      else if(key == 3){
+
+        if(left>right) return;
+
+        if(left <= right){
+        int i,j;
+        i = left; j = right+1;
+        int pivot = s[left].total;
 
       do{
         do i++; while(s[i].total < pivot);
-        do j++; while(s[j].total > pivot);
-      if(i<j) SWAP(s,i,j);
-      }while(i<j);
+        do j--; while(s[j].total > pivot);
+        if(i<j) SWAP(s,i,j);
+        }while(i<j);
       SWAP(s,left,j);
-      quicksort(s,left,j-1);
-      quicksort(s,j+1,right);
+      quicksort(s,left,j-1,key);
+      quicksort(s,j+1,right,key);
+       }
       }
+      else
+      printf("올바른 key를 입력하세요.\n");
 
     }
 
-  }
-
-  /*void heapsort(student *s,int n,int key){
+  void bubblesort(student* s, int n, int key){
     int i,j;
-    student temp;
-
-    for(i = n/2; i>0; i--)
-    adjust(s,i,n);
-
-    for(i=n-1; i>0; i--){
-    SWAP(s[1],s[i+1],temp);
-    adjust(s,1,i);
-  }
-
-  }
-  void adjust(student s[], int root, int n){
-    int child,rootkey;
-    student temp;
-    temp = s[root];
-    rootkey = s[root].key;
-    child = 2*root;
-
-    while(child <= n){
-      if((child < n) && (s[child].key < s[child+1].key))
-      child++;
-      if(rootkey > s[child].key)
-      break;
-      else{
-        s[child/2] = s[child];
-        child *=2;
+    if(key == 1){
+    for(i=0; i<n-1; i++){
+      for(j=i+1; j<n; j++){
+        if(strcmp(s[i].name,s[j].name)>0)
+        SWAP(s,i,j);
       }
     }
-    s[child/2] = temp;
-  }*/
+    }
+    else if(key == 2){
+      for(i=0; i<n-1; i++){
+        for(j=i+1; j<n; j++){
+        if(strcmp(s[i].student_id,s[j].student_id)>0)
+        SWAP(s,i,j);
+      }
+    }
+    }
+    else if(key == 3){
+      for(i=0; i<n-1; i++){
+        for(j=i+1; j<n; j++){
+        if(s[i].total>s[j].total)
+        SWAP(s,i,j);
+      }
+    }
+    }
+    else
+     printf("올바른 key를 입력하세요.\n");
+
+  }  }
+
 
