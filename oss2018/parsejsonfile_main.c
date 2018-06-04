@@ -24,21 +24,9 @@ char * readjsonfile(const char * filename)
 
         FILE *fp;
 
-
 	fp = fopen(filename, "r");
 
-
-
-        fgets(input, sizeof(input), fp);
-
-
-
-        result = (char *) malloc(strlen(input));
-
-        strncpy(result, input, strlen(input));
-
-
-
+        result = (char *) malloc(1));
 
 
         while(!feof(fp)) {
@@ -49,13 +37,7 @@ char * readjsonfile(const char * filename)
 
                 strcat(result, input);
 
-        }
-
-
-
-        result[strlen(result)] = '\0';
-
-
+	}
 
         return result;
 
@@ -106,12 +88,7 @@ void printall(const char *json, jsmntok_t*t, int tokcount){
                 else
 
                         strcpy(type,"UNDFINED");
-
-
-
-                //str = (char*)realloc(str,t[i].end-t[i].start+1);
-
-                //strncpy(str, json+t[i].start , t[i].end-t[i].start);
+		 
 
              printf("[%2d] %s  (size: %d, %d~%d, %s)\n" ,i ,str, t[i].size,t[i].start,t[i].end,type);
 
@@ -162,6 +139,7 @@ void printvalues(const char* json, jsmntok_t* t, int tokcount, int *keys){
         char* str = '\0';
 
         printf("\n\n***** Print Values *****\n");
+	
  for(i =0; i<tokcount; i++){
                 str = (char*)malloc(t[i].end-t[i].start+1);
                 strncpy(str,json+t[i].start,t[i].end-t[i].start);
