@@ -29,6 +29,7 @@ static int jsoneq(const char *json, jsmntok_t *tok, const char *s) {
 	return -1;
 }
 
+//lab 2
 char * readjsonfile(const char * filename)
 {
 	char input[500]; 
@@ -49,7 +50,7 @@ char * readjsonfile(const char * filename)
 	return result;
 }
 
-
+//lab 3
 int makemymenu(const char* json, jsmntok_t* t, int tokcount, mymenu_t* m[]){
         int i,count;
 	int price;
@@ -90,6 +91,7 @@ int makemymenu(const char* json, jsmntok_t* t, int tokcount, mymenu_t* m[]){
 	return count;
 }
 
+//lab 4
 void printmenu(mymenu_t* m[], int mcount){
 	int i;
 	char* category = (char*)malloc(20);
@@ -106,60 +108,6 @@ void printmenu(mymenu_t* m[], int mcount){
 	}
 }
 
-
-void printkeys(const char *json, jsmntok_t *t, int tokcount){
-	printf("\n***** All Keys *****\n");
-	int i;
-	int keycount = 1;
-	char* str = '\0';
-
-	for( i=1; i < tokcount; i++){
-		str = (char*)malloc(t[i].end-t[i].start+1);
-		strncpy(str, json+t[i].start, t[i].end-t[i].start);
-		
-		if(t[i].size >0  && (t[i].type != 1 && t[i].type!= 2)){
-		printf("[%d] %s(%d)\n",keycount, str, i);
-		keycount++;
-		}
-	}
-}
-
-int findkeys(const char *json, jsmntok_t* t, int tokcount, int* keys){
-	int i;
-	int count = 0;
-	char* str = '\0';
-
-	for(i =0; i<tokcount; i++){
-		str = (char*)malloc(t[i].end-t[i].start+1);
-		strncpy(str, json+t[i].start, t[i].end-t[i].start);
-		
-		if(t[i].size > 0 && (t[i].type != 1 && t[i].type!= 2)){
-		keys[count] = i;
-		count++;
-		}
-	}
-	printf("\n*print keys stored in array*\n");
-	for(i=0;i<count;i++)
-	printf("%d ",keys[i]);
-
-	return count;
-}
-void printvalues(const char* json, jsmntok_t* t, int tokcount, int *keys){
-	int i,j;
-	char* str = '\0';
-	
-	printf("\n\n***** Print Values *****\n");
-
-	for(i =0; i<tokcount; i++){
-	        str = (char*)malloc(t[i].end-t[i].start+1);
-	  	strncpy(str,json+t[i].start,t[i].end-t[i].start);
-
-		for(j=0; j<menucount; j++){
-			if(keys[j] == i)
-			printf("key = %d, value = %s\n",keys[j],str);
-		}	
-	}
-}
 
 
 int main() {
