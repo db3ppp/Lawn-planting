@@ -1,0 +1,48 @@
+{
+	"coffee":
+[
+	 {
+	"name":"Americano",
+	"size":"tall",
+	"price":3600
+	},
+        {
+        "name":"CafeLatte",
+        "size":"tall",
+        "price":4100
+        },
+        {
+        "name":"WhiteMocha",
+        "size":"Venti",
+        "price":6600
+        },
+        {
+        "name":"Cappucino",
+        "size":"Grande",
+        "price":5100
+        }
+],
+	"Frappuccino":
+	[
+	 {
+        "name":"Greentea",
+        "size":"Venti",
+        "price":7300
+        },
+        {
+        "name":"Strawberry",
+        "size":"tall",
+        "price":5600
+        },
+        {
+        "name":"Chocolate",
+        "size":"Grande",
+        "price":5600
+        },
+        {
+        "name":"Vanilla",
+        "size":"tall",
+        "price":4800
+        }
+]
+}
