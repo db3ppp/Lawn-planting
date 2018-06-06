@@ -108,9 +108,58 @@ void printmenu(mymenu_t* m[], int mcount){
 	}
 }
 
+// +추가과제: 매출계산하기
+void salemenu(mymenu_t* m[], int mcount){
+	int total=0;
+	int menu,count;
+	int i;
+	int m_total[8] = {0};
 
+	while(1){
+	printmenu(m,mcount);
+	printf("\n주문할 음료 번호를 선택하세요(9. 주문끝내기)\n");
+	scanf("%d",&menu);
+	if(menu == 9) break;
 
-int main() {
+	printf("몇개를 주문하시겠습니까?\n");
+	scanf("%d",&count);
+	
+	switch(menu){
+	case 1: total += count *  m[menu-1]->price;
+		m_total[menu-1] += count * m[menu-1]->price;
+		break;
+	case 2: total += count * m[menu-1]->price;
+		m_total[menu-1] += count * m[menu-1]->price;
+		break;
+        case 3: total += count *  m[menu-1]->price;
+		m_total[menu-1] += count * m[menu-1]->price;
+                break;
+        case 4: total += count * m[menu-1]->price;
+		m_total[menu-1] += count * m[menu-1]->price;
+                break;
+        case 5: total += count *  m[menu-1]->price;
+                m_total[menu-1] += count * m[menu-1]->price;
+		break;
+        case 6: total += count *  m[menu-1]->price;
+		m_total[menu-1] += count * m[menu-1]->price;
+                break;
+        case 7: total += count *  m[menu-1]->price;
+		m_total[menu-1] += count * m[menu-1]->price;
+                break;
+        case 8: total +=  count* m[menu-1]->price;
+		m_total[menu-1] += count * m[menu-1]->price;
+                break;
+	default: printf("올바른 메뉴번호를 입력하세요.\n");
+		break;
+	}
+ }
+for(i=0; i<mcount; i++)
+ printf("[%d]번 음료의 판매금액은 %d 원입니다.\n", i+1, m_total[i]);
+printf("\n===총 판매금액은 %d 원입니다.===\n",total);
+
+}
+
+int main(){
 	int i;
 	int r;
 	int keyarray[128];
@@ -130,7 +179,7 @@ int main() {
 	}
 
 	menucount = makemymenu(JSON_STRING,t,r,mymenu);
-	printmenu(mymenu, menucount);
-
+	//printmenu(mymenu, menucount);
+	salemenu(mymenu, menucount);
 	return EXIT_SUCCESS;
 }
