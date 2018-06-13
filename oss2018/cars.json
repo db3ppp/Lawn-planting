@@ -1,0 +1,28 @@
+{
+"cars":[
+	{
+	"model":"Sonata",
+	"maker":"Hyundai",
+	"year":2016,
+	"gas":"gasoline"
+	},
+	{
+	"model":"Audi",
+        "maker":"Audi",
+        "year":2019,
+        "gas":"diesel"
+	},
+        {
+        "model":"spark",
+        "maker":"Hyundai",
+        "year":2018,
+        "gas":"gasoline"
+        },
+        {
+        "model":"SM6",
+        "maker":"Hyundai",
+        "year":2016,
+        "gas":"diesel"
+        }
+]
+}
